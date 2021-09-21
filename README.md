@@ -29,6 +29,17 @@
 
 - 특정 메모 조회하기       `GET /api/v1/memo/{memoId}`
     - 기존에 있던 메모를 조회한다.
+    - Response
+        ```json
+      {
+          "memo": {
+              "memoId": 1,
+              "title": "title of memo",
+              "content": "content of memo",
+              "updatedAt": "2021-09-21 19:13:16"
+          }
+      }
+         ```
 
 - 메모 수정하기           `PUT /api/v1/memo/{memoId}`
     - 기존에 있던 메모를 삭제한다.
