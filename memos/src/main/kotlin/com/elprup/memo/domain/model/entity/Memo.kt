@@ -19,8 +19,8 @@ data class Memo(
     var content: String,
 
     @CreationTimestamp
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
     @UpdateTimestamp
-    var updatedAt: LocalDateTime
+    var updatedAt: LocalDateTime? = null
 )

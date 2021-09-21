@@ -15,6 +15,17 @@
 - 메모 생성하기           `POST /api/v1/memo`
     - 메모에는 제목, 내용, 생성날짜, 수정날짜가 있다.
     - 날짜 형태는 yyyy-MM-dd HH:mm:ss 이다.
+    - Request
+        ```json
+      {
+          "title": "title of memo",
+          "content": "content of memo"
+      }
+      ```
+    - Response
+      ```text
+      HttpStatus.CREATED
+      ```
 
 - 특정 메모 조회하기       `GET /api/v1/memo/{memoId}`
     - 기존에 있던 메모를 조회한다.
