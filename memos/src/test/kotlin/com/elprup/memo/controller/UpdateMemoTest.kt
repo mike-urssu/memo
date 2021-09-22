@@ -2,8 +2,6 @@ package com.elprup.memo.controller
 
 import com.elprup.memo.application.request.UpdateMemoRequest
 import com.elprup.memo.common.MemoControllerTest
-import com.elprup.memo.domain.model.entity.Memo
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
