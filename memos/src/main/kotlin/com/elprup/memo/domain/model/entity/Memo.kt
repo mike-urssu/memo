@@ -1,5 +1,6 @@
 package com.elprup.memo.domain.model.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -10,17 +11,21 @@ import javax.persistence.*
 data class Memo(
     @field:Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int? = null,
+    var id: Int? = null,
 
     @Column(nullable = false, length = 50)
     var title: String,
 
     @Column(nullable = false, columnDefinition = "TEXT")
     var content: String,
-
+) {
     @CreationTimestamp
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
+    lateinit var createdAt: LocalDateTime
 
     @UpdateTimestamp
-    var updatedAt: LocalDateTime? = null
-)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    lateinit var updatedAt: LocalDateTime
+}
