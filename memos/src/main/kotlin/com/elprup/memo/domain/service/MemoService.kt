@@ -27,9 +27,20 @@ class MemoService(
     }
 
     fun updateMemo(memoId: Int, updateMemoRequest: UpdateMemoRequest) {
-        val memo = memoRepository.findById(memoId).orElseThrow { MemoNotFoundException() }
-        memo.title = updateMemoRequest.title
-        memo.content = updateMemoRequest.content
-        memoRepository.save(memo)
+        memoRepository.findById(memoId).map {
+            it.title = updateMemoRequest.title
+            it.content = updateMemoRequest.content
+            memoRepository.save(it)
+        }.orElseThrow {
+            MemoNotFoundException()
+        }
+    }
+
+    fun deleteMemo(memoId: Int) {
+        memoRepository.findById(memoId).map {
+            memoRepository.delete(it)
+        }.orElseThrow {
+            MemoNotFoundException()
+        }
     }
 }

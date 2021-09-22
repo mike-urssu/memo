@@ -37,4 +37,13 @@ class MemoController(
     ) {
         return memoService.updateMemo(memoId, updateMemoRequest)
     }
+
+    @ApiOperation("특정 메모 삭제하기")
+    @DeleteMapping("/v1/api/memo/{memoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteMemo(
+        @PathVariable memoId: Int
+    ) {
+        return memoService.deleteMemo(memoId)
+    }
 }
