@@ -10,13 +10,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.put
 
 class UpdateMemoTest : MemoControllerTest() {
-    lateinit var memo: Memo
-
-    @BeforeEach
-    fun initData() {
-        memo = createMockMemo()
-    }
-
     @Test
     @DisplayName("메모 수정하기(성공)")
     fun updateMemo_Success() {
