@@ -8,15 +8,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 
 class GetMemoTest : MemoControllerTest() {
-    lateinit var memo: Memo
-
-    @BeforeEach
-    fun initData() {
-        memo = createMockMemo()
-    }
-
     @Test
-    @DisplayName("특정 메모 조회(성공)")
+    @DisplayName("특정 메모 조회하기(성공)")
     fun getMemo_Success() {
         val test = mockMvc.get("/v1/api/memo/{memoId}", memo.id)
 
@@ -29,7 +22,7 @@ class GetMemoTest : MemoControllerTest() {
     }
 
     @Test
-    @DisplayName("특정 메모 조회(실패-존재하지 않는 메모)")
+    @DisplayName("특정 메모 조회하기(실패-존재하지 않는 메모)")
     fun getMemo_Fail_MemoNotFound() {
         val test = mockMvc.get("/v1/api/memo/{memoId}", invalidMemoId)
 

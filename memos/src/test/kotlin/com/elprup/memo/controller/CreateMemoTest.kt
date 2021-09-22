@@ -13,10 +13,12 @@ class CreateMemoTest : MemoControllerTest() {
     fun createMemo_Success() {
         val requestDto = CreateMemoRequest(title = "test title", content = "test content")
 
-        mockMvc.post("/v1/api/memo") {
+        val test = mockMvc.post("/v1/api/memo") {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(requestDto)
-        }.andExpect {
+        }
+
+        test.andExpect {
             status { isCreated() }
         }
     }
