@@ -15,4 +15,16 @@ class DeleteMemoTest : MemoControllerTest() {
             status { isNoContent() }
         }
     }
+
+    @Test
+    @DisplayName("특정 메모 삭제하기(실패-존재하지 않는 메모)")
+    fun deleteMemo_Fail_MemoNotFound() {
+        val test = mockMvc.delete("/v1/api/memo/{memoId}", invalidMemoId)
+
+        test.andExpect {
+            status { isNotFound() }
+            jsonPath("status") { value(404) }
+            jsonPath("error") { value("Memo-001") }
+        }
+    }
 }
