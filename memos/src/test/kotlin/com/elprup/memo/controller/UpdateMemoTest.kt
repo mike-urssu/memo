@@ -31,4 +31,21 @@ class UpdateMemoTest : MemoControllerTest() {
             status { isNoContent() }
         }
     }
+
+    @Test
+    @DisplayName("메모 수정하기(실패-존재하지 않는 메모)")
+    fun updateMemo_Fail_MemoNotFound() {
+        val requestDto = UpdateMemoRequest(title = "updated test title", content = "updated test content")
+
+        val test = mockMvc.put("/v1/api/memo/{memoId}", invalidMemoId) {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(requestDto)
+        }
+
+        test.andExpect {
+            status { isNotFound() }
+            jsonPath("status") { value(404) }
+            jsonPath("error") { value("Memo-001") }
+        }
+    }
 }
