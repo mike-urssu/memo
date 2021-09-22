@@ -2,10 +2,12 @@ package com.elprup.memo.domain.model.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 import javax.persistence.*
 
+@DynamicUpdate
 @Entity
 @Table(name = "memos")
 data class Memo(

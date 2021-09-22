@@ -1,6 +1,7 @@
 package com.elprup.memo.application.controller
 
 import com.elprup.memo.application.request.CreateMemoRequest
+import com.elprup.memo.application.request.UpdateMemoRequest
 import com.elprup.memo.application.response.GetMemoResponse
 import com.elprup.memo.domain.service.MemoService
 import io.swagger.annotations.ApiOperation
@@ -25,5 +26,15 @@ class MemoController(
     fun getMemo(@PathVariable memoId: Int): GetMemoResponse {
         val getMemoDto = memoService.getMemo(memoId)
         return GetMemoResponse(getMemoDto)
+    }
+
+    @ApiOperation("특정 메모 수정하기")
+    @PutMapping("/v1/api/memo/{memoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun updateMemo(
+        @PathVariable memoId: Int,
+        @RequestBody @Valid updateMemoRequest: UpdateMemoRequest
+    ) {
+        return memoService.updateMemo(memoId, updateMemoRequest)
     }
 }
