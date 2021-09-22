@@ -15,4 +15,13 @@ class MemoService(
         val memo = createMemoRequest.toMemo()
         memoRepository.save(memo)
     }
+
+    @Transactional(readOnly = true)
+    fun getMemo(memoId: Int): MemoDto {
+        return memoRepository.findById(memoId).map {
+            MemoDto(it)
+        }.orElseThrow {
+            MemoNotFoundException()
+        }
+    }
 }
