@@ -20,14 +20,14 @@ data class Memo(
 
     @Column(nullable = false, columnDefinition = "TEXT")
     var content: String,
-) {
+
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
-    lateinit var createdAt: LocalDateTime
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    lateinit var updatedAt: LocalDateTime
-}
+    var updatedAt: LocalDateTime = LocalDateTime.now()
+)
