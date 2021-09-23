@@ -65,6 +65,25 @@
       HttpStatus.NO_CONTENT
       ```
 
-- 메모 검색하기           `GET /api/v1/memos/?date={date}&page={page}`
+- 메모 검색하기           `GET /api/v1/memos/?page={page}&date={date}`
     - 날짜를 기준으로 최신순으로 한 페이지당 5개의 메모를 리스트 형태로 출력한다.
     - 날짜 형태는 `yyyy-MM-dd`이다.
+    - Response
+    ```json
+    {
+      "page": {
+          "size": 5,
+          "totalElements": 1,
+          "totalPages": 1,
+          "number": 0
+      },
+      "memos": [
+          {
+              "memoId": 1,
+              "title": "title of memo",
+              "content": "content of memo",
+              "updatedAt": "2021-09-01 00:00:00"
+          }
+      ]
+    }
+    ```

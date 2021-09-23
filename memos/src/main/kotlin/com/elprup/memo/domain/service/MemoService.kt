@@ -5,8 +5,11 @@ import com.elprup.memo.application.request.UpdateMemoRequest
 import com.elprup.memo.domain.exception.MemoNotFoundException
 import com.elprup.memo.domain.model.dto.GetMemoDto
 import com.elprup.memo.domain.model.repository.MemoRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 @Service
 class MemoService(
@@ -42,5 +45,12 @@ class MemoService(
         }.orElseThrow {
             MemoNotFoundException()
         }
+    }
+
+    fun getMemos(date: LocalDate, pageRequest: Pageable): Page<GetMemoDto> {
+        return memoRepository.findAllByUpdatedAtIsAfterOrderByUpdatedAtDescIdDesc(date.atStartOfDay(), pageRequest)
+            .map {
+                GetMemoDto(it)
+            }
     }
 }

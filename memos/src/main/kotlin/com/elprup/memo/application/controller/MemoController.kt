@@ -3,10 +3,15 @@ package com.elprup.memo.application.controller
 import com.elprup.memo.application.request.CreateMemoRequest
 import com.elprup.memo.application.request.UpdateMemoRequest
 import com.elprup.memo.application.response.GetMemoResponse
+import com.elprup.memo.application.response.GetMemosResponse
 import com.elprup.memo.domain.service.MemoService
 import io.swagger.annotations.ApiOperation
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 import javax.validation.Valid
 
 @RestController
@@ -45,5 +50,16 @@ class MemoController(
         @PathVariable memoId: Int
     ) {
         return memoService.deleteMemo(memoId)
+    }
+
+    @ApiOperation("메모 목록 조회하기")
+    @GetMapping("/v1/api/memos")
+    @ResponseStatus(HttpStatus.OK)
+    fun getMemos(
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate,
+        @RequestParam page: Int
+    ): GetMemosResponse {
+        val memos = memoService.getMemos(date, PageRequest.of(page, 5, Sort.by("updatedAt").descending()))
+        return GetMemosResponse(memos)
     }
 }
