@@ -56,8 +56,8 @@ class MemoController(
     @GetMapping("/v1/api/memos")
     @ResponseStatus(HttpStatus.OK)
     fun getMemos(
-        @RequestParam page: Int,
-        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate,
+        @RequestParam page: Int
     ): GetMemosResponse {
         val memos = memoService.getMemos(date, PageRequest.of(page, 5, Sort.by("updatedAt").descending()))
         return GetMemosResponse(memos)

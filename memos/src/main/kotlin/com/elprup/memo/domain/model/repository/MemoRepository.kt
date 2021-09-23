@@ -9,5 +9,5 @@ import java.time.LocalDateTime
 
 @Repository
 interface MemoRepository : JpaRepository<Memo, Int> {
-    fun findAllByUpdatedAtIsAfter(updatedAt: LocalDateTime, pageRequest: Pageable): Page<Memo>
+    fun findAllByUpdatedAtIsAfterOrderByUpdatedAtDescIdDesc(updatedAt: LocalDateTime, pageRequest: Pageable): Page<Memo>
 }

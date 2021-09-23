@@ -48,8 +48,9 @@ class MemoService(
     }
 
     fun getMemos(date: LocalDate, pageRequest: Pageable): Page<GetMemoDto> {
-        return memoRepository.findAllByUpdatedAtIsAfter(date.atStartOfDay(), pageRequest).map {
-            GetMemoDto(it)
-        }
+        return memoRepository.findAllByUpdatedAtIsAfterOrderByUpdatedAtDescIdDesc(date.atStartOfDay(), pageRequest)
+            .map {
+                GetMemoDto(it)
+            }
     }
 }
