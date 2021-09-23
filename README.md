@@ -28,7 +28,6 @@
       ```
 
 - 특정 메모 조회하기       `GET /api/v1/memo/{memoId}`
-    - 기존에 있던 메모를 조회한다.
     - Response
       ```text
       HttpStatus.OK
@@ -45,7 +44,6 @@
       ```
 
 - 메모 수정하기           `PUT /api/v1/memo/{memoId}`
-    - 기존에 있던 메모를 수정한다.
     - Request
       ```json
       {
@@ -59,16 +57,18 @@
       ```
 
 - 메모 삭제하기           `DELETE /api/v1/memo/{memoId}`
-    - 기존에 있던 메모를 삭제한다.
     - Response
       ```text
       HttpStatus.NO_CONTENT
       ```
 
-- 메모 검색하기           `GET /api/v1/memos/?page={page}&date={date}`
-    - 날짜를 기준으로 최신순으로 한 페이지당 5개의 메모를 리스트 형태로 출력한다.
+- 메모 목록 조회하기       `GET /api/v1/memos/?page={page}&date={date}`
+    - 날짜를 기준 최신순으로 한 페이지당 5개의 메모를 리스트 형태로 출력한다.
     - 날짜 형태는 `yyyy-MM-dd`이다.
     - Response
+    ```text
+    HttpStatus.OK
+    ```
     ```json
     {
       "page": {

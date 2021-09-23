@@ -33,7 +33,7 @@ class MemoController(
         return GetMemoResponse(getMemoDto)
     }
 
-    @ApiOperation("특정 메모 수정하기")
+    @ApiOperation("메모 수정하기")
     @PutMapping("/v1/api/memo/{memoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updateMemo(
@@ -43,7 +43,7 @@ class MemoController(
         return memoService.updateMemo(memoId, updateMemoRequest)
     }
 
-    @ApiOperation("특정 메모 삭제하기")
+    @ApiOperation("메모 삭제하기")
     @DeleteMapping("/v1/api/memo/{memoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteMemo(
