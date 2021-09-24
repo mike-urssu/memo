@@ -6,7 +6,7 @@
 
 ## ERD
 
-![memo ERD](https://user-images.githubusercontent.com/69888508/133885111-30f7b9e1-4cdd-42e9-a01d-2d1f0c191419.png)
+![memo erd](https://user-images.githubusercontent.com/69888508/134698233-709f4e81-287d-4712-bfc5-ea7f0af04da9.png)
 
 ## [Swagger-Ui 바로가기](http://localhost/swagger-ui/index.html)
 
