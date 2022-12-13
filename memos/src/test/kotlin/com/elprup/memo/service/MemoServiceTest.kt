@@ -1,5 +1,6 @@
 package com.elprup.memo.service
 
+import com.elprup.memo.domain.exception.MemoNotFoundException
 import com.elprup.memo.domain.model.dto.GetMemoDto
 import com.elprup.memo.domain.model.entity.Memo
 import com.elprup.memo.domain.model.repository.MemoRepository
@@ -7,6 +8,7 @@ import com.elprup.memo.domain.service.MemoService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
 import org.mockito.InjectMocks
@@ -53,12 +55,24 @@ class MemoServiceTest {
         // given
         given(memoRepository.findById(id)).willReturn(Optional.of(memo))
 
-        //when
+        // when
         val actualDto = memoService.getMemo(id)
 
-        //then
+        // then
         assertEquals(expectedDto.memoId, actualDto.memoId)
         assertEquals(expectedDto.title, actualDto.title)
         assertEquals(expectedDto.content, actualDto.content)
+    }
+
+    @Test
+    @DisplayName("특정 메모 조회하기_실패_해당 메모가 존재하지 않음")
+    fun getMemo_Fail_MemoNotFound() {
+        val invalidId = Int.MIN_VALUE
+
+        // given
+        given(memoRepository.findById(invalidId)).willThrow(MemoNotFoundException())
+
+        // when, then
+        assertThrows<MemoNotFoundException> { memoService.getMemo(invalidId) }
     }
 }
