@@ -40,11 +40,10 @@ class MemoService(
     }
 
     fun deleteMemo(memoId: Int) {
-        memoRepository.findById(memoId).map {
-            memoRepository.delete(it)
-        }.orElseThrow {
-            MemoNotFoundException()
-        }
+        memoRepository.findById(memoId).ifPresentOrElse(
+            { memoRepository.delete(it) },
+            { throw MemoNotFoundException() }
+        )
     }
 
     fun getMemos(date: LocalDate, pageRequest: Pageable): Page<GetMemoDto> {

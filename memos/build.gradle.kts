@@ -28,6 +28,8 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     runtimeOnly("mysql:mysql-connector-java")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
+    // implementation("org.springframework.boot:spring-boot-starter-aop")
 }
 
 tasks.withType<KotlinCompile> {
