@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
@@ -23,14 +24,15 @@ import java.time.LocalDate
 import javax.validation.Valid
 
 @RestController
+@RequestMapping("/v1/api/memos")
 class MemoController(
     private val memoService: MemoService
 ) {
     @ApiOperation("메모 생성하기")
-    @PostMapping("/v1/api/memo")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createMemo(@RequestBody @Valid request: CreateMemoRequest) {
-        return memoService.createMemo(request)
+        memoService.createMemo(request.title, request.content)
     }
 
     @ApiOperation("특정 메모 조회하기")

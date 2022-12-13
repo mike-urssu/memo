@@ -1,9 +1,9 @@
 package com.elprup.memo.domain.service
 
-import com.elprup.memo.application.request.CreateMemoRequest
 import com.elprup.memo.application.request.UpdateMemoRequest
 import com.elprup.memo.domain.exception.MemoNotFoundException
 import com.elprup.memo.domain.model.dto.GetMemoDto
+import com.elprup.memo.domain.model.entity.Memo
 import com.elprup.memo.domain.model.repository.MemoRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -15,10 +15,8 @@ import java.time.LocalDate
 class MemoService(
     private val memoRepository: MemoRepository
 ) {
-    fun createMemo(createMemoRequest: CreateMemoRequest) {
-        val memo = createMemoRequest.toMemo()
-        memoRepository.save(memo)
-    }
+    fun createMemo(title: String, content: String) =
+        memoRepository.save(Memo(title, content))
 
     @Transactional(readOnly = true)
     fun getMemo(memoId: Int): GetMemoDto {
