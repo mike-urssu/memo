@@ -1,6 +1,5 @@
 package com.elprup.memo.domain.service
 
-import com.elprup.memo.application.request.UpdateMemoRequest
 import com.elprup.memo.domain.exception.MemoNotFoundException
 import com.elprup.memo.domain.model.dto.GetMemoDto
 import com.elprup.memo.domain.model.entity.Memo
@@ -24,15 +23,16 @@ class MemoService(
             .map { GetMemoDto(it) }
             .orElseThrow { MemoNotFoundException() }
 
-    fun updateMemo(memoId: Int, updateMemoRequest: UpdateMemoRequest) {
-        memoRepository.findById(memoId).map {
-            it.title = updateMemoRequest.title
-            it.content = updateMemoRequest.content
-            memoRepository.save(it)
-        }.orElseThrow {
-            MemoNotFoundException()
-        }
-    }
+    fun updateMemo(memoId: Int, title: String, content: String) =
+        memoRepository.findById(memoId).ifPresentOrElse(
+            {
+                it.update(title, content)
+                memoRepository.save(it)
+            },
+            {
+                throw MemoNotFoundException()
+            }
+        )
 
     fun deleteMemo(memoId: Int) {
         memoRepository.findById(memoId).ifPresentOrElse(

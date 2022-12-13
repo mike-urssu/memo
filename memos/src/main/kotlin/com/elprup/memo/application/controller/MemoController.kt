@@ -44,14 +44,12 @@ class MemoController(
     }
 
     @ApiOperation("메모 수정하기")
-    @PutMapping("/v1/api/memo/{memoId}")
+    @PutMapping("/{memoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updateMemo(
         @PathVariable memoId: Int,
         @RequestBody @Valid request: UpdateMemoRequest
-    ) {
-        return memoService.updateMemo(memoId, request)
-    }
+    ) = memoService.updateMemo(memoId, request.title, request.content)
 
     @ApiOperation("메모 삭제하기")
     @DeleteMapping("/v1/api/memo/{memoId}")
