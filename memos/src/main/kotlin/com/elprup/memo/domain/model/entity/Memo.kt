@@ -33,4 +33,9 @@ data class Memo(
         columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
     )
     var updatedAt: LocalDateTime = LocalDateTime.now()
+
+    fun update(title: String, content: String) {
+        this.title = title
+        this.content = content
+    }
 }

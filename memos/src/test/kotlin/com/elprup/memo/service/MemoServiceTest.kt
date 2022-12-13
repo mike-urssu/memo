@@ -75,4 +75,43 @@ class MemoServiceTest {
         // when, then
         assertThrows<MemoNotFoundException> { memoService.getMemo(invalidId) }
     }
+
+    @Test
+    @DisplayName("메모 수정하기_성공")
+    fun updateMemo_Success() {
+        val id = 1
+        val title = "title for service unit test"
+        val content = "content for service unit test"
+        val memo = Memo(title, content)
+        memo.id = id
+
+        val newTitle = "updated title for service unit test"
+        val newContent = "updated content for service unit test"
+        val expectedMemo = memo.copy(newTitle, newContent)
+        expectedMemo.id = memo.id
+
+        // given
+        given(memoRepository.findById(id)).willReturn(Optional.of(memo))
+        given(memoRepository.save(expectedMemo)).willReturn(expectedMemo)
+
+        // when
+        val actualMemo = memoService.updateMemo(id, newTitle, newContent)
+
+        // then
+        assertEquals(expectedMemo, actualMemo)
+    }
+
+    @Test
+    @DisplayName("메모 수정하기_실패_해당 메모가 존재하지 않음")
+    fun updateMemo_Fail_MemoNotFound() {
+        val invalidId = Int.MIN_VALUE
+        val newTitle = "updated title for service unit test"
+        val newContent = "updated content for service unit test"
+
+        // given
+        given(memoRepository.findById(invalidId)).willThrow(MemoNotFoundException())
+
+        // when, then
+        assertThrows<MemoNotFoundException> { memoService.updateMemo(invalidId, newTitle, newContent) }
+    }
 }
