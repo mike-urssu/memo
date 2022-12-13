@@ -7,4 +7,8 @@ class UpdateMemoRequest(
     val title: String,
     @field:NotNull
     val content: String
-)
+) {
+    override fun toString() = """
+            { "title": "$title", "content": "$content" }
+        """.trimIndent()
+}

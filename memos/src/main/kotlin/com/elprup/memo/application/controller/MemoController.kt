@@ -10,7 +10,15 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 import javax.validation.Valid
 
@@ -21,8 +29,8 @@ class MemoController(
     @ApiOperation("메모 생성하기")
     @PostMapping("/v1/api/memo")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createMemo(@RequestBody @Valid createMemoRequest: CreateMemoRequest) {
-        return memoService.createMemo(createMemoRequest)
+    fun createMemo(@RequestBody @Valid request: CreateMemoRequest) {
+        return memoService.createMemo(request)
     }
 
     @ApiOperation("특정 메모 조회하기")
@@ -38,9 +46,9 @@ class MemoController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updateMemo(
         @PathVariable memoId: Int,
-        @RequestBody @Valid updateMemoRequest: UpdateMemoRequest
+        @RequestBody @Valid request: UpdateMemoRequest
     ) {
-        return memoService.updateMemo(memoId, updateMemoRequest)
+        return memoService.updateMemo(memoId, request)
     }
 
     @ApiOperation("메모 삭제하기")

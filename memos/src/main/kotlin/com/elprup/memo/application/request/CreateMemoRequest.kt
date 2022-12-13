@@ -15,4 +15,8 @@ class CreateMemoRequest(
             content = content
         )
     }
+
+    override fun toString() = """
+            { "title": "$title", "content": "$content" }
+        """.trimIndent()
 }
