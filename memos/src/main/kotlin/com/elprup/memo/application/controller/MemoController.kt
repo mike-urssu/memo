@@ -36,11 +36,11 @@ class MemoController(
     }
 
     @ApiOperation("특정 메모 조회하기")
-    @GetMapping("/v1/api/memo/{memoId}")
+    @GetMapping("/{memoId}")
     @ResponseStatus(HttpStatus.OK)
     fun getMemo(@PathVariable memoId: Int): GetMemoResponse {
-        val getMemoDto = memoService.getMemo(memoId)
-        return GetMemoResponse(getMemoDto)
+        val dto = memoService.getMemo(memoId)
+        return GetMemoResponse(dto)
     }
 
     @ApiOperation("메모 수정하기")

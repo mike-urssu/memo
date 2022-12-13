@@ -19,13 +19,10 @@ class MemoService(
         memoRepository.save(Memo(title, content))
 
     @Transactional(readOnly = true)
-    fun getMemo(memoId: Int): GetMemoDto {
-        return memoRepository.findById(memoId).map {
-            GetMemoDto(it)
-        }.orElseThrow {
-            MemoNotFoundException()
-        }
-    }
+    fun getMemo(memoId: Int): GetMemoDto =
+        memoRepository.findById(memoId)
+            .map { GetMemoDto(it) }
+            .orElseThrow { MemoNotFoundException() }
 
     fun updateMemo(memoId: Int, updateMemoRequest: UpdateMemoRequest) {
         memoRepository.findById(memoId).map {
