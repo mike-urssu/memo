@@ -11,23 +11,26 @@ import javax.persistence.*
 @Entity
 @Table(name = "memos")
 data class Memo(
-    @field:Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null,
-
-    @Column(nullable = false, length = 50)
+    @field:Column(nullable = false, length = 50)
     var title: String,
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    var content: String,
+    @field:Column(nullable = false, columnDefinition = "TEXT")
+    var content: String
+) {
+    @field:Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null
 
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @field:Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
+    private val createdAt = LocalDateTime.now()
 
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @field:Column(
+        nullable = false,
+        columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    )
     var updatedAt: LocalDateTime = LocalDateTime.now()
-)
+}
