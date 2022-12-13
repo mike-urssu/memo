@@ -49,7 +49,9 @@ class MemoController(
     fun updateMemo(
         @PathVariable memoId: Int,
         @RequestBody @Valid request: UpdateMemoRequest
-    ) = memoService.updateMemo(memoId, request.title, request.content)
+    ) {
+        memoService.updateMemo(memoId, request.title, request.content)
+    }
 
     @ApiOperation("메모 삭제하기")
     @DeleteMapping("/v1/api/memo/{memoId}")

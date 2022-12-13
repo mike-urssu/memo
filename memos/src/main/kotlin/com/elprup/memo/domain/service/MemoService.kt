@@ -23,16 +23,13 @@ class MemoService(
             .map { GetMemoDto(it) }
             .orElseThrow { MemoNotFoundException() }
 
-    fun updateMemo(memoId: Int, title: String, content: String) =
-        memoRepository.findById(memoId).ifPresentOrElse(
-            {
+    fun updateMemo(memoId: Int, title: String, content: String): Memo =
+        memoRepository.findById(memoId)
+            .map {
                 it.update(title, content)
                 memoRepository.save(it)
-            },
-            {
-                throw MemoNotFoundException()
             }
-        )
+            .orElseThrow { MemoNotFoundException() }
 
     fun deleteMemo(memoId: Int) {
         memoRepository.findById(memoId).ifPresentOrElse(
