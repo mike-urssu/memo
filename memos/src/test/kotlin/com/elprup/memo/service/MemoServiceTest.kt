@@ -5,6 +5,7 @@ import com.elprup.memo.domain.model.dto.GetMemoDto
 import com.elprup.memo.domain.model.entity.Memo
 import com.elprup.memo.domain.model.repository.MemoRepository
 import com.elprup.memo.domain.service.MemoService
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -135,5 +136,20 @@ class MemoServiceTest {
 
         // then
         verify(memoRepository).delete(memo)
+    }
+
+    @Test
+    @DisplayName("메모 삭제하기_실패_해당 메모 없음")
+    fun deleteMemo_Fail_MemoNotFound() {
+        val invalidId = Int.MIN_VALUE
+
+        // given
+        given(memoRepository.findById(invalidId)).willThrow(MemoNotFoundException())
+
+        // when
+        val exception = assertThrows<MemoNotFoundException> { memoService.deleteMemo(invalidId) }
+
+        // then
+        assertThat(exception::class).isEqualTo(MemoNotFoundException::class)
     }
 }
