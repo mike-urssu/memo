@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.willDoNothing
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.lenient
+import org.mockito.Mockito.verify
 import org.mockito.junit.jupiter.MockitoExtension
 import java.util.Optional
 
@@ -113,5 +115,25 @@ class MemoServiceTest {
 
         // when, then
         assertThrows<MemoNotFoundException> { memoService.updateMemo(invalidId, newTitle, newContent) }
+    }
+
+    @Test
+    @DisplayName("메모 삭제하기_성공")
+    fun deleteMemo_Success() {
+        val id = 1
+        val title = "title for service unit test"
+        val content = "content for service unit test"
+        val memo = Memo(title, content)
+        memo.id = id
+
+        // given
+        given(memoRepository.findById(id)).willReturn(Optional.of(memo))
+        willDoNothing().given(memoRepository).delete(memo)
+
+        // when
+        memoService.deleteMemo(id)
+
+        // then
+        verify(memoRepository).delete(memo)
     }
 }
