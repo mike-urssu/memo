@@ -54,13 +54,11 @@ class MemoController(
     }
 
     @ApiOperation("메모 삭제하기")
-    @DeleteMapping("/v1/api/memo/{memoId}")
+    @DeleteMapping("/{memoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteMemo(
         @PathVariable memoId: Int
-    ) {
-        return memoService.deleteMemo(memoId)
-    }
+    ) = memoService.deleteMemo(memoId)
 
     @ApiOperation("메모 목록 조회하기")
     @GetMapping("/v1/api/memos")

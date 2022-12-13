@@ -31,12 +31,16 @@ class MemoService(
             }
             .orElseThrow { MemoNotFoundException() }
 
-    fun deleteMemo(memoId: Int) {
-        memoRepository.findById(memoId).ifPresentOrElse(
-            { memoRepository.delete(it) },
-            { throw MemoNotFoundException() }
-        )
-    }
+    fun deleteMemo(memoId: Int) =
+        memoRepository.findById(memoId)
+            .ifPresentOrElse(
+                {
+                    memoRepository.delete(it)
+                },
+                {
+                    throw MemoNotFoundException()
+                }
+            )
 
     fun getMemos(date: LocalDate, pageRequest: Pageable): Page<GetMemoDto> {
         return memoRepository.findAllByUpdatedAtIsAfterOrderByUpdatedAtDescIdDesc(date.atStartOfDay(), pageRequest)

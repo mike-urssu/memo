@@ -5,15 +5,18 @@ import com.elprup.memo.domain.model.dto.GetMemoDto
 import com.elprup.memo.domain.model.entity.Memo
 import com.elprup.memo.domain.model.repository.MemoRepository
 import com.elprup.memo.domain.service.MemoService
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.willDoNothing
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.lenient
+import org.mockito.Mockito.verify
 import org.mockito.junit.jupiter.MockitoExtension
 import java.util.Optional
 
@@ -113,5 +116,40 @@ class MemoServiceTest {
 
         // when, then
         assertThrows<MemoNotFoundException> { memoService.updateMemo(invalidId, newTitle, newContent) }
+    }
+
+    @Test
+    @DisplayName("메모 삭제하기_성공")
+    fun deleteMemo_Success() {
+        val id = 1
+        val title = "title for service unit test"
+        val content = "content for service unit test"
+        val memo = Memo(title, content)
+        memo.id = id
+
+        // given
+        given(memoRepository.findById(id)).willReturn(Optional.of(memo))
+        willDoNothing().given(memoRepository).delete(memo)
+
+        // when
+        memoService.deleteMemo(id)
+
+        // then
+        verify(memoRepository).delete(memo)
+    }
+
+    @Test
+    @DisplayName("메모 삭제하기_실패_해당 메모 없음")
+    fun deleteMemo_Fail_MemoNotFound() {
+        val invalidId = Int.MIN_VALUE
+
+        // given
+        given(memoRepository.findById(invalidId)).willThrow(MemoNotFoundException())
+
+        // when
+        val exception = assertThrows<MemoNotFoundException> { memoService.deleteMemo(invalidId) }
+
+        // then
+        assertThat(exception::class).isEqualTo(MemoNotFoundException::class)
     }
 }
